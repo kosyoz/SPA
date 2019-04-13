@@ -196,7 +196,7 @@ namespace UnitTesting
 
 		TEST_METHOD(splitWithCondition_multipleClauses_multipleWhitespaces_success)
 		{
-			std::vector<std::string> input = { "with      a.stmt# = 20", "and s   .stmt# = 5", "with p.    procName = \"proc\"", "and p1.procName     = \"proc1\"", "and c.value =     9" };
+			std::vector<std::string> input = { "with      a.stmt# = 20", "and s.stmt# = 5", "with p.procName = \"proc\"", "and p1.procName     = \"proc1\"", "and c.value =     9" };
 			std::vector<std::pair<std::string, std::string>> actual =
 				QueryParser::splitWithCondition(input);
 			std::vector<std::pair<std::string, std::string>> expected{ {"a.stmt#", "20"},

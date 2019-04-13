@@ -430,3 +430,13 @@ Tests/system-tests-2/out-Calls.xml
 Tests/system-tests-2/out-ParentStar.xml
 Tests/system-tests-2/out-Parent.xml
 Tests/system-tests-2/out-Affects.xml
+Tests/system-tests-3/out-Affects.xml
+Tests/system-tests-1/out-Parent.xml
+Tests/system-tests-1/out-ParentStar.xml
+Tests/system-tests-2/out-PatternAssign.xml
+Tests/system-tests-2/out-PatternWhile.xml
+Tests/system-tests-2/out-PatternIf.xml
+Tests/system-tests-2/out-With.xml
+Tests/system-tests-3/out-NoCondition.xml
+Tests/system-tests-3/out-NextStar.xml
+Tests/system-tests-3/out-Next.xml

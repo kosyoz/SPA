@@ -404,7 +404,6 @@ std::unordered_map<std::string, std::vector<std::string>> QueryUtility::crossPro
 				newColumn.push_back(columnIt->second[j]);
 			}
 		}
-		std::pair<std::string, std::vector<std::string>> toAddPair(columnIt->first, newColumn);
 		newTable.insert({ columnIt->first, newColumn });
 	}
 	for (auto columnIt = toAddTable.begin(); columnIt != toAddTable.end(); ++columnIt) {

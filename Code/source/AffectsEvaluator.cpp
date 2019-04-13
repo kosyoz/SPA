@@ -20,7 +20,7 @@ std::string AffectsEvaluator::isTrivial(std::string firstArgument, std::string s
 			result = PKB().isAffector(stoi(firstArgument));
 		}
 		else if (QueryUtility::isInteger(secondArgument)) {
-			result = PKB().hasAffectStarPair(stoi(firstArgument), stoi(secondArgument));
+			result = PKB().hasAffectPair(stoi(firstArgument), stoi(secondArgument));
 		}
 	}
 	return QueryUtility::truthValue(result);
@@ -43,8 +43,8 @@ std::unordered_map<std::string, std::vector<std::string>> AffectsEvaluator::eval
 				stoi(secondArgument)));
 		}
 		else if (firstArgument == secondArgument) {
-			tableResult = QueryUtility::to_mapvec(firstArgument, "twin",
-				PKB().getAffectPairs());
+			tableResult = QueryUtility::to_mapvec(firstArgument, QueryUtility::getTwin(
+				PKB().getAffectPairs()));
 		}
 		else {
 			tableResult = QueryUtility::to_mapvec(firstArgument, secondArgument,

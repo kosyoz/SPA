@@ -159,17 +159,17 @@ Select ifs such that Parent*(30, 66)
 none
 5000
 33 - select synonym, parent* stmtNum and nonexistent stmtNum
-stmt s; stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c;
+stmt s;
 Select s such that Parent*(77, 100)
 none
 5000
 34 - select synonym, parent* nonexistent stmtNum and stmtNum
-stmt s; stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c;
+stmt s; 
 Select s such that Parent*(101, 65)
 none
 5000
 35 - select synonym, parent* nonexistent stmtNum and nonexistent stmtNum
-stmt s; stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c;
+stmt s; 
 Select s such that Parent*(103, 88)
 none
 5000

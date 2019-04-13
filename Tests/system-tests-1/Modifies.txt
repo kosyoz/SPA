@@ -10,12 +10,12 @@ TRUE
 5000
 3 - Integer Statement Modifies WildCard true
 
-Select BOOLEAN such that Modifies(199, _))
+Select BOOLEAN such that Modifies(199, _)
 TRUE
 5000
 4 - Integer Statement Modifies WildCard false
 
-Select BOOLEAN such that Modifies(267, _))
+Select BOOLEAN such that Modifies(267, _)
 FALSE
 5000
 5 - Variable Statement Modifies variable synonym

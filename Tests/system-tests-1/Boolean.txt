@@ -39,7 +39,7 @@ Select BOOLEAN such that Follows(1,2) such that Calls(s, s1) and Calls(s1, s)
 FALSE
 5000
 9 - select boolean with clauses that return results and clauses that do not return any results
-proc s, s1; stmt a, a1;
+procedure s, s1; stmt a, a1;
 Select BOOLEAN such that Follows(a, a1) such that Calls(s, s1) and Calls(s1, s)
 FALSE
 5000

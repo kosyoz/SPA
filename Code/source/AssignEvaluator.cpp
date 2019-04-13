@@ -38,7 +38,7 @@ std::unordered_map<std::string, std::vector<std::string>> AssignEvaluator::evalu
 		secondArgument = ExpressionUtil::convertInfixToPrefix(secondArgument);
 		if (firstArgument == "_") {
 			return QueryUtility::to_mapvec(patternSynonym,
-				PKB().findPattern(firstArgument, false));
+				PKB().findPattern(secondArgument, false));
 		}
 		else if (QueryUtility::isQuoted(firstArgument)) {
 			return QueryUtility::to_mapvec(patternSynonym,

@@ -181,5 +181,26 @@ namespace UnitTesting
 			Assert::AreEqual(expectedOutput, output);
 
 		}
+
+		TEST_METHOD(testValidExpressionComplexConversion)
+		{
+			std::string testExpression = "shoes + (pants * (sandals + 1)";
+
+			std::string output = ExpressionUtil::convertInfixToPrefix(testExpression);
+			std::string expectedOutput = " + shoes * pants + sandals 1 ";
+			Assert::AreEqual(expectedOutput, output);
+
+		}
+
+		TEST_METHOD(testValidExpressionComplexContainingConversion)
+		{
+			std::string testExpression = "sandals + 1";
+
+			std::string output = ExpressionUtil::convertInfixToPrefix(testExpression);
+			std::string expectedOutput = " + sandals 1 ";
+			Assert::AreEqual(expectedOutput, output);
+
+		}
+
 	};
 }

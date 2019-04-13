@@ -197,6 +197,8 @@ bool RunTimeDesignExtractor::DFSRecursiveCheckAffecting(int start, int current, 
 			}
 		}
 	}
+
+	cfgPath.erase(current);
 	return false;
 }
 
@@ -216,6 +218,7 @@ bool RunTimeDesignExtractor::DFSRecursiveCheckAffectedBy(int end, int current, s
 	//If we find that affects is possible we return as we know anything above it in the CFG cannot affect the end statemnt.
 	std::unordered_set<std::string> usedList = pkb->getVarUsedByStm(end);
 	std::unordered_set<std::string> modifiedVar;
+	std::unordered_set<std::string> relevantModifiedVar;
 
 	//Not first node
 	if (!isStart) {
@@ -236,6 +239,7 @@ bool RunTimeDesignExtractor::DFSRecursiveCheckAffectedBy(int end, int current, s
 						}
 						//we mark it as modified.
 						relevantVar.insert(var);
+						relevantModifiedVar.insert(var);
 					}
 				}
 			}
@@ -244,7 +248,7 @@ bool RunTimeDesignExtractor::DFSRecursiveCheckAffectedBy(int end, int current, s
 
 	//Early return if the var used by statement has already all been found.
 	if (pkb->getVarUsedByStm(end) == relevantVar) {
-		for (std::string var : modifiedVar) {
+		for (std::string var : relevantModifiedVar) {
 			relevantVar.erase(var);
 		}
 		return false;
@@ -274,9 +278,11 @@ bool RunTimeDesignExtractor::DFSRecursiveCheckAffectedBy(int end, int current, s
 		}
 	}
 
-	for (std::string var : modifiedVar) {
+	for (std::string var : relevantModifiedVar) {
 		relevantVar.erase(var);
 	}
+
+	cfgPath.erase(current);
 	return false;
 }
 
@@ -311,6 +317,7 @@ void RunTimeDesignExtractor::DFSRecursiveGetAffectingList(int end, int current, 
 	//If we find that affects is possible we return as we know anything above it in the CFG cannot affect the end statemnt.
 
 	std::unordered_set<std::string> usedList = pkb->getVarUsedByStm(end);
+	std::unordered_set<std::string> relevantModifiedVar;
 	std::unordered_set<std::string> modifiedVar;
 
 	//Not first node
@@ -332,6 +339,7 @@ void RunTimeDesignExtractor::DFSRecursiveGetAffectingList(int end, int current, 
 						}
 						//we mark it as modified.
 						relevantVar.insert(var);
+						relevantModifiedVar.insert(var);
 					}
 				}
 			}
@@ -340,7 +348,7 @@ void RunTimeDesignExtractor::DFSRecursiveGetAffectingList(int end, int current, 
 
 	//Early return if the var used by statement has already all been found.
 	if (pkb->getVarUsedByStm(end) == relevantVar) {
-		for (std::string var : modifiedVar) {
+		for (std::string var : relevantModifiedVar) {
 			relevantVar.erase(var);
 		}
 		return;
@@ -367,9 +375,10 @@ void RunTimeDesignExtractor::DFSRecursiveGetAffectingList(int end, int current, 
 		}
 	}
 
-	for (std::string var : modifiedVar) {
+	for (std::string var : relevantModifiedVar) {
 		relevantVar.erase(var);
 	}
+	cfgPath.erase(current);
 	return;
 }
 

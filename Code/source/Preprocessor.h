@@ -31,7 +31,7 @@ class Preprocessor {
 private:
 	std::string chunk;
 	int size;
-	int stopper;
+	int stopper = 0;
 	int stmtNum = 1;
 	std::vector<Statement> procLst;
 	std::stack<int> ifStmt;

@@ -8,10 +8,7 @@ which gives boolean answer
 */
 std::string SuchThatEvaluator::isTrivial(std::string relation, std::string firstArgument,
 	std::string secondArgument) {
-	if (QueryUtility::isOutOfRange(firstArgument) || QueryUtility::isOutOfRange(secondArgument)) {
-		return "FALSE";
-	}
-	else if (relation == "Follows") {
+	if (relation == "Follows") {
 		return FollowsEvaluator::isTrivial(firstArgument, secondArgument);
 	}
 	else if (relation == "Follows*") {
@@ -27,7 +24,7 @@ std::string SuchThatEvaluator::isTrivial(std::string relation, std::string first
 		return UsesEvaluator::isTrivial(firstArgument, secondArgument);
 	}
 	else if (relation == "Modifies") {
-		return UsesEvaluator::isTrivial(firstArgument, secondArgument);
+		return ModifiesEvaluator::isTrivial(firstArgument, secondArgument);
 	}
 	else if (relation == "Calls") {
 		return CallsEvaluator::isTrivial(firstArgument, secondArgument);
@@ -59,13 +56,7 @@ std::unordered_map<std::string, std::vector<std::string>> SuchThatEvaluator::eva
 	std::string relation, std::string firstArgument, std::string secondArgument) {
 	std::unordered_map<std::string, std::vector<std::string>> tableResult;
 	std::vector<std::string> emptyVec;
-	if (QueryUtility::isOutOfRange(firstArgument)) {
-		tableResult.insert({ secondArgument, emptyVec });
-	}
-	else if (QueryUtility::isOutOfRange(secondArgument)) {
-		tableResult.insert({ firstArgument, emptyVec });
-	}
-	else if (relation == "Follows") {
+	if (relation == "Follows") {
 		tableResult = FollowsEvaluator::evaluate(declarations,
 			firstArgument, secondArgument);
 	}
