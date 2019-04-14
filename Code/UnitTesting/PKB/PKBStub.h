@@ -127,3 +127,6 @@ std::unordered_map<int, std::pair<std::string, std::string> > patternList =
 { {4, {"apple", " + cherry * 10 banana "}}, {7, {"durian", " + grapes banana "}},
 {8, {"figs", " * apple / melon cherry "}}, {10, {"pineapple", " + apple melon "}},
 {15, {"pear", " + jackfruit apple "}} };
+
+std::unordered_set<std::pair<int, std::string>, intStringhash> patternPairs =
+{ {4, "apple"}, {7, "durian"}, {8, "figs"}, {10, "pineapple"}, {15, "pear"} };

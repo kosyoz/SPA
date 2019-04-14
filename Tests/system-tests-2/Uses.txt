@@ -20,7 +20,7 @@ Select s such that Uses(s, _)
 5000
 5 - select synonym, uses synonym wildcard
 variable v; procedure p;
-Select v such that Uses(p, _)
+Select p such that Uses(p, _)
 ifOnly, whileOnly, ifInsideWhile, whileInsideIf, doubleWhile, whileInsideWhile, ifInsideIf, whileInsideWhileInsideWhile, doubleWhileInsideWhile, ifAndWhileInsideWhile
 5000
 6 - select synonym, uses undeclared synonym and wildcard
@@ -56,7 +56,7 @@ ifOnly, whileOnly, ifInsideWhile, whileInsideIf, doubleWhile
 12 - select synonym, uses if varName
 if ifs;
 Select ifs such that Uses(ifs, "two")
-1
+1, 19
 5000
 13 - select synonym, uses synonym varName
 if ifs; 
@@ -80,7 +80,7 @@ Select a such that Uses(a, "green")
 5000
 17 - select synonym, uses synonym varName
 call c;
-Select s such that Uses(c, "square")
+Select c such that Uses(c, "square")
 4, 6, 7, 9, 10, 13, 15, 17, 20, 23, 24, 25, 26, 37, 40, 43, 48, 62 
 5000
 18 - select synonym, uses synonym varName
@@ -116,7 +116,7 @@ cat, dog, coke, sprite, pepsi, fanta
 24 - select synonym, uses stmtNum synonym
 variable v;
 Select v such that Uses(41, v)
-grey, black, while, circle, square, triangle, pentagon, chicken, cow, pig, cat, dog, coke, sprite, pepsi, fanta
+white, black, while, circle, square, triangle, pentagon, chicken, cow, pig, cat, dog, coke, sprite, pepsi, fanta
 5000
 25 - select synonym, uses procName synonym
 variable v;
@@ -190,8 +190,8 @@ Select pr such that Uses(pr, v)
 5000
 39 - select synonym, uses synonym and synonym
 assign a; variable v;
-Select s such that Uses(a, v)
-2, 16, 27, 34, 38, 42, 54, 59, 64, 70, 74, 83, 85, 86
+Select a such that Uses(a, v)
+3, 16, 22, 27, 34, 38, 42, 54, 59, 64, 70, 74, 83, 85, 86
 5000
 40 - select synonym, uses synonym and undeclared synonym
 stmt s;

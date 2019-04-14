@@ -12,11 +12,11 @@
 
 /** Usage Guide
   This class optimises the evaluator by chaining the clauses together such that every other clause will have at least 1 clause evaluated
-  
+
   // To use:
-  Optimizer op = Optimizer(st, w, p, s, d); // st/w/p -> suchthat/with/pattern, s-> select, d -> declarations 
+  Optimizer op = Optimizer(st, w, p, s, d); // st/w/p -> suchthat/with/pattern, s-> select, d -> declarations
   op.groupClause();
-  
+
   // To get the groups of trivial/non-trivial clauses:
   std::vector<std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>>>> trivial = op.getTrivial();
   std::vector<std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>>>> nontrivial = op.getNonTrivial();
@@ -32,9 +32,10 @@ private:
 	int wsize; //withClauseSize
 	std::vector<std::string> selectClause;
 	std::unordered_map<std::string, std::string> declarations;
-	std::unordered_map<std::string, std::priority_queue<std::pair<int,int>>> synMap;
+	std::unordered_map<std::string, std::priority_queue<std::pair<int, int>>> synMap;
 	std::unordered_map<int, std::vector<std::string>> clMap;
-	std::priority_queue<std::pair<int, int>> nonSynPQ;
+	std::unordered_set<std::string> selectSet;
+	std::priority_queue<std::pair<int, int>> pq;
 	// these variables are used for storage of results
 	std::vector<std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>>>> trivial;
 	std::vector<std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>>>> nontrivial;
@@ -42,12 +43,14 @@ private:
 	std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>>> graph;
 	// sets are used for bookkeeping to prevent infinite calls
 	std::unordered_set<std::string> synSet;
-	std::set<std::pair<int,int>, std::greater<std::pair<int, int>>> clSet;
+	std::set<std::pair<int, int>, std::greater<std::pair<int, int>>> clSet;
 	// processing functions - refer to .cpp for more details
 	bool isProg_line(std::string str);
 	void groupByClauseType(int t);
-	void createMaps(std::vector<std::string> synLst, std::pair<int,int> cl);
-	bool mapClauses(std::pair<int,int> cl, bool trivial);
+	void createMaps(std::vector<std::string> synLst, std::pair<int, int> cl);
+	bool mapGraph();
+	void processSelect();
+	bool mapClauses(std::pair<int, int> cl, bool trivial);
 	bool mapSynonym(std::string syn, bool trivial);
 	std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>> getClause(int cl);
 public:

@@ -52,10 +52,10 @@ store.addNext(12, 11);
 store.addNext(13, 14);
 */
 
-// stm = 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13
-std::unordered_set<int> next[12] = { {2}, {3}, {4}, {5}, {6, 8}, {7}, {6}, {9}, {11}, {12}, {11}, {14} };
-// stm = 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14
-std::unordered_set<int> previous[11] = { {1}, {2}, {3}, {4}, {5, 7}, {6}, {5}, {8}, {10, 12}, {11}, {13} };
+std::unordered_map<int, nRelationships> nextTable = { {1, { {2}, {0} }}, {2, { {3}, {1} }},
+{3, { {4}, {2} }}, {4, { {5}, {3} }}, {5, { {6, 8}, {4} }}, {6, { {7}, {5, 7} }}, {7, { {6}, {6} }},
+{8, { {9}, {5} }}, {9, { {0}, {8} }}, {10, { {11}, {0} }}, {11, { {12}, {10, 12} }},
+{12, { {11}, {11} }}, {13, { {14}, {0} }}, {14, { {0}, {13} }} };
 
 std::unordered_set< std::pair<int, int>, intPairhash> nextPairList = { std::pair<int, int>(1, 2),
 	std::pair<int, int>(2, 3), std::pair<int, int>(3, 4), std::pair<int, int>(4, 5),

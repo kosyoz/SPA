@@ -28,7 +28,7 @@ FALSE
 Select BOOLEAN such that Affects(7, 9)
 FALSE
 5000
-7 - stmt 12 is not assign
+7 - stmt 12 is not assign Therefore not possible to affect 12.
 
 Select BOOLEAN such that Affects(10, 12)
 FALSE
@@ -36,12 +36,12 @@ FALSE
 8 - c is not modified in else clause proc d
 
 Select BOOLEAN such that Affects(16, 18)
-TRUE
+FALSE
 5000
 9 - c is not modified in else clause proc d
 
 Select BOOLEAN such that Affects(16, 16)
-TRUE
+FALSE
 5000
 10 - 
 
@@ -51,12 +51,12 @@ TRUE
 11 - c is not modified in if clause proc d
 
 Select BOOLEAN such that Affects(19, 23)
-TRUE
+FALSE
 5000
 12 - b is not modified in else clause proc d
 
 Select BOOLEAN such that Affects(20, 22)
-TRUE
+FALSE
 5000
 13 - 
 

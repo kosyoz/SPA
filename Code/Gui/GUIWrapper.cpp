@@ -2,10 +2,6 @@
 
 #include <iostream>
 
-#include "PKB.h"
-#include "Preprocessor.h"
-#include "Parser.h"
-
 // a default constructor
 GUIWrapper::GUIWrapper() {
   // create any objects here as instance variables of this class

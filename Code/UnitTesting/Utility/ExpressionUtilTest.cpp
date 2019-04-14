@@ -184,7 +184,7 @@ namespace UnitTesting
 
 		TEST_METHOD(testValidExpressionComplexConversion)
 		{
-			std::string testExpression = "shoes + (pants * (sandals + 1)";
+			std::string testExpression = "shoes + (pants * (sandals + 1))";
 
 			std::string output = ExpressionUtil::convertInfixToPrefix(testExpression);
 			std::string expectedOutput = " + shoes * pants + sandals 1 ";

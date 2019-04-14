@@ -1,0 +1,165 @@
+1 - get variable used in procedure
+variable v;
+Select v such that Uses("a", v)
+a, b, c, d
+5000
+2 - get variable used in procedure
+variable v;
+Select v such that Uses("b", v)
+a, b, c, d
+5000
+3 - get variable used in procedure
+variable v;
+Select v such that Uses("c", v)
+a, b, c, d
+5000
+4 - get variable used in procedure
+variable v;
+Select v such that Uses("d", v)
+a, b, c, d
+5000
+5 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(1, v)
+a, b, c, d
+5000
+6 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(2, v)
+b
+5000
+7 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(4, v)
+a, b, c, d
+5000
+8 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(5, v)
+a
+5000
+9 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(6, v)
+a, b, c, d
+5000
+10 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(7, v)
+b
+5000
+11 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(8, v)
+a, b, c, d
+5000
+12 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(11, v)
+none
+5000
+13 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(12, v)
+b
+5000
+14 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(14, v)
+a, b, c, d
+5000
+15 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(16, v)
+c
+5000
+16 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(18, v)
+a, c
+5000
+17 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(20, v)
+c, d
+5000
+18 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(22, v)
+b
+5000
+19 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(24, v)
+none
+5000
+20 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(25, v)
+a, b, c, d
+5000
+21 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(26, v)
+b
+5000
+22 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(28, v)
+c
+5000
+23 - get variable used in stmtNumber
+variable v;
+Select v such that Uses(31, v)
+c
+5000
+24 - get all procedure using varName
+variable v; procedure p;
+Select p such that Uses(p, "a")
+a, b, c, d
+5000
+25 - get all procedure using varName
+variable v; procedure p;
+Select p such that Uses(p, "b")
+a, b, c, d
+5000
+26 - get all procedure using varName
+variable v; procedure p;
+Select p such that Uses(p, "c")
+a, b, c, d
+5000
+27 - get all procedure using varName
+variable v; procedure p;
+Select p such that Uses(p, "d")
+a, b, c, d
+5000
+28 - select all procedure
+variable v; procedure p;
+Select p such that Uses(p, _)
+a, b, c, d
+5000
+29 - select all procedure
+variable v; procedure p;
+Select p such that Uses(p, v)
+a, b, c, d
+5000
+30 - invalid queries
+variable v; procedure p;
+Select p such that Uses(_, _)
+none
+5000
+31 - invalid queries
+variable v; procedure p;
+Select v such that Uses(_, _)
+none
+5000
+32 - invalid queries
+variable v; procedure p;
+Select p such that Uses(_, v)
+none
+5000
+33 - invalid queries
+variable v; procedure p;
+Select v such that Uses(_, v)
+none
+5000

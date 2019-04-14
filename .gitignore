@@ -440,3 +440,17 @@ Tests/system-tests-2/out-With.xml
 Tests/system-tests-3/out-NoCondition.xml
 Tests/system-tests-3/out-NextStar.xml
 Tests/system-tests-3/out-Next.xml
+Tests/system-tests-2/out-NextStar.xml
+Tests/system-tests-2/out-Next.xml
+Tests/system-tests-3/out-AffectsStar.xml
+Tests/system-tests-4/out-Affects.xml
+Tests/system-tests-4/out-AffectsStar.xml
+Tests/system-tests-2/out-AffectsStar.xml
+Tests/system-tests-4/out-Uses.xml
+Tests/system-tests-4/out-Modifies.xml
+Tests/system-tests-iteration-1/out-2.xml
+Tests/system-tests-iteration-1/out-1.xml
+Tests/system-tests-iteration-1/out-4.xml
+Tests/system-tests-iteration-1/out-3.xml
+Tests/system-tests-iteration-1/out.xml
+Tests/system-tests-iteration-1/out-irregular.xml

@@ -5,7 +5,7 @@
 /*
 Projects result of the query 
 */
-std::list<std::string> QueryEvaluator::projectResult(
+std::unordered_set<std::string> QueryEvaluator::projectResult(
 	std::unordered_map<std::string, std::string> declarations,
 	std::vector<std::string> selectedVar,
 	std::vector<std::pair<std::string, std::pair<std::string, std::string>>> suchThatCondition,
@@ -24,7 +24,7 @@ std::list<std::string> QueryEvaluator::projectResult(
 		std::string, std::string>, std::pair<std::string, std::string>>> trivialGroup = op.getNonSynonym();
 	std::vector<std::unordered_map<std::string, std::vector<std::string>>> selectedMaps;
 	std::string status = isTrivialGroupTrue(trivialGroup);
-	std::list<std::string> resultList;
+	std::unordered_set<std::string> resultSet;
 	for (std::vector<std::vector<
 		std::pair<std::pair<
 		std::string, std::string>, std::pair<std::string, std::string>>>>::size_type i = 0;
@@ -61,7 +61,7 @@ std::list<std::string> QueryEvaluator::projectResult(
 			evaluateGroup(declarations, selectedGroup[i])));
 	}
 	if (selectedVar[0] == "BOOLEAN") {
-		resultList.push_back(status);
+		resultSet.insert(status);
 	}
 	else if (status == "TRUE") {
 		std::unordered_map<std::string, std::vector<std::string>> projectMap;
@@ -82,20 +82,20 @@ std::list<std::string> QueryEvaluator::projectResult(
 					QueryUtility::getStmtsMap(declarations, pointer));
 			}
 		}
-		resultList = toStringList(declarations, selectedVar, projectMap);
+		resultSet = toStringSet(declarations, selectedVar, projectMap);
 	}
-	return resultList;
+	return resultSet;
 }
 
 /*
 Translate the projectTable to 
 set of strings.
 */
-std::list<std::string> QueryEvaluator::toStringList(
+std::unordered_set<std::string> QueryEvaluator::toStringSet(
 	std::unordered_map<std::string, std::string> declarations,
 	std::vector<std::string> selectedVar,
 	std::unordered_map<std::string, std::vector<std::string>> projectTable) {
-	std::list<std::string> resultList;
+	std::unordered_set<std::string> resultSet;
 	int projectedSize = projectTable.begin()->second.size();
 	for (std::vector<std::string>::size_type i = 0; i != projectedSize; i++) {
 		std::string tuple;
@@ -121,9 +121,9 @@ std::list<std::string> QueryEvaluator::toStringList(
 				}
 			}
 		}
-		resultList.push_back(tuple);
+		resultSet.insert(tuple);
 	}
-	return resultList;
+	return resultSet;
 }
 
 std::string QueryEvaluator::isTrivialGroupTrue(std::vector<

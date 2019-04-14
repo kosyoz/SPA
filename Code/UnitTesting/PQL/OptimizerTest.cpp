@@ -35,7 +35,7 @@ namespace UnitTesting
 			st.push_back(clause);
 			Optimizer op = Optimizer(st, wempty, empty, s, d);
 			std::pair<int, std::vector<std::string>> result = op.extractSuchThatSyn(0);
-			std::vector<std::string> vect{ "a", "s" };
+			std::vector<std::string> vect{ "s", "a" };
 			std::pair<int, std::vector<std::string>> expected = std::make_pair(19, vect);
 			Assert::IsTrue(result.first == expected.first && result.second == expected.second);
 		}
@@ -72,7 +72,7 @@ namespace UnitTesting
 			d["pr"] = "print";
 			Optimizer op = Optimizer(empty, w, empty, s, d);
 			std::pair<int, std::vector<std::string>> result = op.extractWithSyn(0);
-			std::vector<std::string> vect{ "re", "pr" };
+			std::vector<std::string> vect{ "pr", "re" };
 			std::pair<int, std::vector<std::string>> expected = std::make_pair(32, vect);
 			Assert::IsTrue(result.first == expected.first && result.second == expected.second);
 		}
@@ -85,7 +85,7 @@ namespace UnitTesting
 			d["pr"] = "print";
 			Optimizer op = Optimizer(empty, w, empty, s, d);
 			std::pair<int, std::vector<std::string>> result = op.extractWithSyn(0);
-			std::vector<std::string> vect{ "pr", "n" };
+			std::vector<std::string> vect{ "n", "pr" };
 			std::pair<int, std::vector<std::string>> expected = std::make_pair(32, vect);
 			Assert::IsTrue(result.first == expected.first && result.second == expected.second);
 		}
@@ -192,12 +192,12 @@ namespace UnitTesting
 			p.push_back(clause1);
 			st.push_back(clause2); st.push_back(clause3); st.push_back(clause4); st.push_back(clause8);
 			w.push_back(clause5); w.push_back(clause6); w.push_back(clause7);
-			s.push_back("a");
+			s.push_back("a.stmt#");
 			d["w"] = "while"; d["v"] = "variable"; d["ifs"] = "if"; d["s"] = "stmt";
 			Optimizer op = Optimizer(st, w, p, s, d);
 			op.groupClause();
 			std::vector<std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>>>> result1 = op.getTrivial();
-			std::vector<std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>>>> expected1 = { {c6, c2, c1, c5, c3, c4} };
+			std::vector<std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>>>> expected1 = { {c6, c2, c1, c5, c4, c3} };
 			std::vector<std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>>>> result2 = op.getNonTrivial();
 			std::vector<std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>>>> expected2 = { };
 			std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>>> result3 = op.getNonSynonym();

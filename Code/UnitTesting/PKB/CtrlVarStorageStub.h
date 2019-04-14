@@ -3,7 +3,6 @@
 #include "CtrlVarStorage.h"
 
 /*
-
 	procedure fruit {
 1		read apple;
 2		call fruit2;
@@ -34,7 +33,6 @@
 	procedure fruit4 {
 15		pear = jackfruit + apple;
 	}
-
 */
 
 /*
@@ -49,3 +47,10 @@ std::unordered_map<std::string, std::unordered_set<int>> ifVariableToStm = { {"a
 
 std::unordered_map<std::string, std::unordered_set<int>> whileVariableToStm = { {"cherry", {6}},
 {"durian", {6}}, {"banana", {11}} };
+
+std::unordered_set<std::pair<int, std::string>, intStringhash> ifPatternPair =
+{ std::pair<int, std::string>(5, "apple") };
+
+std::unordered_set<std::pair<int, std::string>, intStringhash> whilePatternPair =
+{ std::pair<int, std::string>(6, "durian"), std::pair<int, std::string>(6, "cherry"),
+std::pair<int, std::string>(11, "banana") };

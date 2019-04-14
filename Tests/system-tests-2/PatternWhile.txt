@@ -161,7 +161,7 @@ Select w pattern w("sprite", _)
 33 - pattern while multiple spaces
 while w;
 Select w pattern w("    circle   " ,  _   )
-50
+none
 5000
 34 - pattern while, invalid args
 while w;

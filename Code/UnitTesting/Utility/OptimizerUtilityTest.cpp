@@ -115,25 +115,15 @@ namespace UnitTesting
 			int actual = OptimizerUtility::getSuchThatPriority("Next*", 2);
 			Assert::AreEqual(actual, 11);
 		}
-		TEST_METHOD(testSynonymtPriorityRead)
-		{
-			int actual = OptimizerUtility::getSynonymPriority("read");
-			Assert::AreEqual(actual, 10);
-		}
-		TEST_METHOD(testSynonymPriorityProg)
-		{
-			int actual = OptimizerUtility::getSynonymPriority("prog_line");
-			Assert::AreEqual(actual, 1);
-		}
 		TEST_METHOD(testNoSynSTPriority1)
 		{
 			int actual = OptimizerUtility::getNoSynSuchThatPriority("Follows", 2);
-			Assert::AreEqual(actual, 6);
+			Assert::AreEqual(actual, 16);
 		}
 		TEST_METHOD(testNoSynSTPriority2)
 		{
 			int actual = OptimizerUtility::getNoSynSuchThatPriority("Affects", 0);
-			Assert::AreEqual(actual, 4);
+			Assert::AreEqual(actual, 13);
 		}
 	};
 }

@@ -11,7 +11,7 @@ namespace UnitTesting
 		TEST_METHOD_INITIALIZE(CallStorage_Initialize)
 		{
 			CallStorage store;
-			store.erase();
+			store.clear();
 			store.addCall("fruit", "fruit2", 2);
 			store.addCall("fruit", "fruit3", 9);
 			store.addCall("fruit2", "fruit3", 12);
@@ -69,7 +69,7 @@ namespace UnitTesting
 		TEST_METHOD(getCaller_MultipleCallers_ReturnSet)
 		{
 			CallStorage store;
-			Assert::IsTrue(store.getCaller("fruit3") == caller[2]);
+			Assert::IsTrue(store.getCaller("fruit3") == callTable.at("fruit3").caller);
 		}
 
 		TEST_METHOD(getCaller_NonExistingProc_ReturnEmptySet)
@@ -81,7 +81,7 @@ namespace UnitTesting
 		TEST_METHOD(getCallee_MultipleCallees_ReturnSet)
 		{
 			CallStorage store;
-			Assert::IsTrue(store.getCallee("fruit") == callees[0]);
+			Assert::IsTrue(store.getCallee("fruit") == callTable.at("fruit").callees);
 		}
 
 		TEST_METHOD(getCallee_NoCallee_ReturnEmptySet)
@@ -93,7 +93,7 @@ namespace UnitTesting
 		TEST_METHOD(getCallAnc_MultipleAnc_ReturnSet)
 		{
 			CallStorage store;
-			Assert::IsTrue(store.getCallAnc("fruit4") == callAnc[3]);
+			Assert::IsTrue(store.getCallAnc("fruit4") == callTable.at("fruit4").callAnc);
 		}
 
 		TEST_METHOD(getCallAnc_NoCallAnc_ReturnEmptySet)
@@ -105,7 +105,7 @@ namespace UnitTesting
 		TEST_METHOD(getCallDesc_MultipleDesc_ReturnSet)
 		{
 			CallStorage store;
-			Assert::IsTrue(store.getCallDesc("fruit") == callDesc[0]);
+			Assert::IsTrue(store.getCallDesc("fruit") == callTable.at("fruit").callDesc);
 		}
 
 		TEST_METHOD(getCallDesc_NonExistingProc_ReturnEmptySet)

@@ -1,7 +1,7 @@
 1 - select bool, 4 such that wildcard wildcard
 assign a;
 Select BOOLEAN such that Follows(_, _) and Next(_, _) and Calls(_, _) and Parent(_, _)
-true
+TRUE
 5000
 2 - select synonym, 2 such that
 prog_line n; stmt s;
@@ -16,31 +16,26 @@ Select a such that Follows*(a, n) and Next*(13, n)
 4 - select tuple, 2 such that
 procedure p, q; variable v;
 Select p such that Modifies(p, "a") and Calls(p, "transportation")
-TestA, TestB, TestC
+TestA, TestB, TestC, oneCall
 5000
 5 - select bool, 3 such that wildcard synonym
 call c; assign a1, a2; print pr;
 Select BOOLEAN such that Follows*(pr, c) and Next(a1, a2) and Uses(a2, _)
-true
+TRUE
 5000
-6 - select synonym, 4 such that synonym synonym
-prog_line n1, n2; variable v; call c;
-Select c such that Next*(n1, n2) and Modifies(398, v) and Uses(n2, v) and Modifies(c, v)
-96, 109, 119, 122, 135, 237
-5000
-7 - select tuple, 5 with
+6 - select tuple, 5 with
 procedure p, q;
 Select <p, q> with 1 = 1 and 2 = 2 and 3 = 3 and p.procName = "colours" and q.procName = q.procName
 colours TestA, colours TestB, colours TestC, colours TenWhileLoop, colours procedure, colours fruits, colours colours, colours Pr0c3dUr3, colours oneCall, colours transportation, colours country
 5000
-8 - select synonym, 3 with
+7 - select synonym, 3 with
 stmt s, s1; variable v, v1;
 Select v with s.stmt# = s1.stmt# and v.varName = v1.varName and 1 = 2
 none
 5000
-9 - select synonym, 5 pattern
+8 - select synonym, 5 pattern
 assign a, a1, a2; if ifs, ifs1; variable v, v1;
-Select a such that pattern a(v, "c") and a1(v, _"x"_) and a2(v1, _) and ifs(v1, _, _) and ifs2(_, _, _)
+Select a pattern a(v, "c") and a1(v, _"x"_) and a2(v1, _) and ifs(v1, _, _) and ifs1(_, _, _)
 87, 105
 5000
 10 - select synonym, stmtNum, 1 such that 1 with 1 pattern
@@ -50,8 +45,8 @@ Select a such that Modifies(a, v) with v.varName = "grab" pattern a(_, _"bike"_)
 5000
 11 - select synonym, stmtNum, 1 such that 1 with 1 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v; procedure p, q;
-Select ifs such that Uses(ifs, v) with v.varName = "c" pattern ifs(v, _, _)
-74, 95, 161, 162, 168
+Select ifs such that Uses(ifs, v) with v.varName = "b" pattern ifs(v, _, _)
+28, 54, 74, 95, 161, 162
 5000
 12 - select synonym, stmtNum, 2 such that 1 with 1 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v; procedure p, q;
@@ -60,13 +55,13 @@ procedure, TestC, TestA, TestB
 5000
 13 - select synonym, stmtNum, 2 such that 1 with 1 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v; procedure p, q;
-Select w such that Modifies(w, v) and Parent*(w, a) with v.varName = "i" pattern w("a", _)
+Select w such that Modifies(w, v) and Parent*(w, re) with v.varName = "i" pattern w("a", _)
 160, 170, 171, 172
 5000
 14 - select synonym, stmtNum, 2 such that 1 with 2 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v; procedure p, q;
-Select a such that Uses(a, v) and Parent(ifs, a) with v.varName = "a" pattern a(v, _"b + c"_) and ifs(v, _, _)
-84
+Select a such that Uses(a, v) and Parent*(ifs, a) with v.varName = "b" pattern a(_, _"b + c"_) and ifs(v, _, _)
+84, 104, 181
 5000
 15 - select synonym, stmtNum, 2 such that 1 with 2 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v; procedure p, q;
@@ -81,7 +76,7 @@ Select a such that Modifies(a, v) and Parent*(ifs, a) with v.varName = "kiwi" an
 17 - select synonym, stmtNum, 1 such that 2 with 2 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons, cons1; call c; variable v; procedure p, q;
 Select w such that Next*(w, w) with pr.varName = v.varName and re.varName = v.varName and 2 = 2 pattern w(v, _) and a(v, _)  
-30, 42, 76, 81, 97, 101, 107, 108, 112, 114, 120, 123, 124, 128, 131, 133, 142, 157, 160, 163, 165, 170, 171, 172, 176, 216, 319, 321, 332, 342, 354, 358, 362, 373, 377, 391, 399   
+30, 42, 76, 81, 97, 101, 107, 108, 112, 114, 120, 123, 124, 128, 131, 133, 142, 157, 160, 163, 165, 170, 171, 172, 216, 319, 321, 332, 342, 354, 358, 362, 373, 377, 391, 399, 234,245,259,289,417,453,56   
 5000
 18 - select synonym, stmtNum, 2 such that 3 with 2 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons, cons1; call c; variable v; procedure p, q;
@@ -96,7 +91,7 @@ none
 20 - select tuple, 2 such that 2 with 2 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v; procedure p, q;
 Select <p,c> such that Calls(p, q) and Parent(ifs, c) with q.procName = "oneCall" and c.procName = p.procName pattern ifs(v, _, _) and a(v, _)
-procedure 35, procedure 49, procedure 64
+procedure 35, procedure 49, procedure 64, fruits 159,fruits 167,fruits 75,fruits 86
 5000
 21 - select synonym, 3 such that 2 with 1 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v;
@@ -106,7 +101,7 @@ Select pr such that Next(s, a) and Parent(ifs, pr) and Uses(pr, v) with s.stmt# 
 22 - select synonym, stmtNum, 3 such that 2 with 1 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v; procedure p, q;
 Select v such that Calls(q, p) and Uses(p, v) and Modifies(q, v) with p.procName = "fruits" and q.procName = "TestC" pattern a(_, _)
-pear, banana, grape, apple, orange, avocado, cherry, kiwi, red, blue, pink, yellow, purple, green, white, black, uk, usa, spain brazil, russia, malaysia, thailand, india, singapore, japan, vietnam, laos
+pear, banana, grape, apple, orange, avocado, cherry, kiwi, red, blue, pink, yellow, purple, green, white, black, uk, usa, russia, malaysia, thailand, india, singapore, japan, vietnam, laos, a,b,bike,brazil,brown,bus,c,car,d,else,gojek,grab,grey,if,m,motorcycle,mrt,print,r,read,spain,train,while,x
 5000
 23 - select synonym, stmtNum, 3 such that 2 with 2 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v; procedure p, q;
@@ -128,23 +123,23 @@ stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; var
 Select pr such that Next(_, 300) and Next*(c, pr) and Modifies(a, v) and Call(p, q) with c.procName = p.procName and v.varName = "x" and 1 = 1 and c.stmt# = pattern a(v, _"x"_) and ifs(_, _, _) and w(v, _, _)
 none
 5000
-27 - select synonym, stmtNum, 5 such that 3 with 3 pattern
+27 - select synonym, stmtNum, 4 such that 1 with 3 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons, cons1; call c; variable v; procedure p, q;
-Select w such that Uses(w, v) and Next(a, re) and Modifies(ifs, v) and Next*(a, w) and Follows(re, pr) with a.stmt# = cons.value and ifs.stmt# = cons1.value and pr.varName = re.varName pattern ifs(v, _, _) and a(v, _) and w(v, _)
-15
+Select w such that Uses(w, v) and Next(a, re) and Modifies(ifs, v) and Next*(a, w) with pr.varName = re.varName pattern ifs(v, _, _) and a(v, _) and w(v, _)
+142, 245, 342, 358, 373, 377, 399
 5000
 28 - select synonym, 5 such that 4 with 3 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v; procedure p, q;
-Select s such that Follows(pr, re) and Next(126, a) and Parent(s, re) and Parent (s, a) and and Uses(ifs, v) Modifies(w, v) with p.procName = "procedure" and v.varName = "b" and c.procName = q.procName and ifs.stmt# = 26 pattern a(v, "b + 6") and ifs(v, _, _) and w(v, _)
+Select s such that Follows(pr, re) and Next(126, a) and Parent(s, re) and Parent(s, a) and Uses(ifs, v) and Modifies(w, v) with p.procName = "procedure" and v.varName = "b" and c.procName = q.procName and re.stmt# = 126 pattern a(v, "b + 6") and ifs(v, _, _) and w(v, _)
 124
 5000
-29 - select synonym, 5 such that 4 with 3 pattern
+29 - select synonym, 6 such that 3 with 2 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v; procedure p, q;
-Select pr such that Follows(re, pr) and Next(a, 79) and Parent(s, re) and Parent (s, c) and Uses(ifs, v) and Modifies(w, v) with p.procName = "TestA" and v.varName = "b" and c.procName = "oneCall" and ifs.stmt# = 26 pattern a("c", _) and ifs(v, _, _) and w(v, _)
+Select pr such that Follows(re, pr) and Next(a, 79) and Parent(s, re) and Parent (s, c) and Uses(ifs, v) and Modifies(w, v) with p.procName = "TestA" and v.varName = "b" and c.procName = "oneCall" pattern ifs(v, _, _) and w(v, _)
 180
 5000
 30 - select synonym, stmtNum, 5 such that 4 with 3 pattern
 stmt s; assign a; print pr; read re; if ifs; while w; constant cons; call c; variable v; procedure p, q;
-Select re such that Next(451, _) and Follow*(re, pr) and Modifies(a, v) and Call(p, q) and Uses(pr, v) with p.procName = "TestA" and c.procName = q.procName and ifs.stmt# = cons.value and w.stmt# = 97 pattern a(_, _"a"_) and ifs(_, _, _) and w(_, _)
-1, 3, 19, 21, 71, 116, 179, 186, 188, 227, 253, 264, 265, 298, 301, 324, 344, 353, 338, 415, 458, 459, 470
+Select re such that Next(451, _) and Follows*(re, pr) and Modifies(a, v) and Calls(p, q) and Uses(pr, v) with p.procName = "TestA" and c.procName = q.procName and ifs.stmt# = cons.value and w.stmt# = 97 pattern a(_, _"a"_) and ifs(_, _, _) and w(_, _)
+1, 3, 19, 21, 71, 116, 186, 188
 5000

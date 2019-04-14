@@ -11,7 +11,7 @@ namespace UnitTesting
 		TEST_METHOD_INITIALIZE(PKB_Initialize)
 		{
 			PKB store;
-			store.erase();
+			store.clear();
 
 			store.addProc("fruit");
 			store.addProc("fruit2");
@@ -269,10 +269,34 @@ namespace UnitTesting
 						   std::unordered_set<int>{15});
 		}
 
-		TEST_METHOD(findPatternWithoutVariable_findMatchinSubstring_CorrectResult)
+		TEST_METHOD(findPatternWithoutVariable_findMatchingSubstring_CorrectResult)
 		{
 			Assert::IsTrue(PKB().findPattern(" * 10 banana ", false) ==
 						   std::unordered_set<int>{4});
+		}
+
+		TEST_METHOD(findPatternPairs_findExactMatch_CorrectResult)
+		{
+			Assert::IsTrue(PKB().findPatternPairs(" + cherry * 10 banana ", true) ==
+						   std::unordered_set<std::pair<int, std::string>, intStringhash>{{4, "apple"}});
+		}
+
+		TEST_METHOD(findPatternPairs_findSubstring_CorrectResult)
+		{
+			Assert::IsTrue(PKB().findPatternPairs(" apple ", false) ==
+						   std::unordered_set<std::pair<int, std::string>, intStringhash>{ 
+							   {8, "figs"}, { 10, "pineapple" }, { 15, "pear" } });
+		}
+
+		TEST_METHOD(findPatternPairs_AllPairs_CorrectResult)
+		{
+			Assert::IsTrue(PKB().findPatternPairs("", false) == patternPairs);
+		}
+
+		TEST_METHOD(findPatternPairs_findNothing_EmptySet)
+		{
+			Assert::IsTrue(PKB().findPatternPairs("", true) ==
+						   std::unordered_set<std::pair<int, std::string>, intStringhash>());
 		}
 
 	};

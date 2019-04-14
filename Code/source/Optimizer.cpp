@@ -1,12 +1,12 @@
 #include "Optimizer.h"
 
-/* 
+/*
 * Constructor function
 */
 Optimizer::Optimizer(
 	std::vector<std::pair<std::string, std::pair<std::string, std::string>>> st,
 	std::vector<std::pair<std::string, std::string>> w,
-	std::vector<std::pair<std::string, std::pair<std::string, std::string>>> p, 
+	std::vector<std::pair<std::string, std::pair<std::string, std::string>>> p,
 	std::vector<std::string> s, std::unordered_map<std::string, std::string> d) {
 	suchThatClauses = st;
 	withClauses = w;
@@ -28,18 +28,19 @@ void Optimizer::groupClause() {
 		groupByClauseType(i);
 	}
 	//while loop to order non-synonym clauses
-	std::pair<int,int> cl;
-	while (!nonSynPQ.empty()) { //
-		cl = nonSynPQ.top();
+	std::pair<int, int> cl;
+	while (!pq.empty()) { //
+		cl = pq.top();
 		nonsynonym.push_back(getClause(cl.second));
-		nonSynPQ.pop();
+		pq.pop();
 	}
+	processSelect();
 	bool isTrivial;
-	//while loop to chain clauses (DFS)
+	//while loop to chain clauses (Dijkstra)
 	while (!clSet.empty()) {
-		//function for the more efficient clause? get from PKB statistics or use pq
-		cl = *clSet.begin(); //rn use the first in set
-		isTrivial = mapClauses(cl, true);
+		pq.push(*clSet.begin()); //use the first in set (ordered by priority)
+		clSet.erase(clSet.begin()); //clause removed from bookkeeping sets
+		isTrivial = mapGraph();
 		if (isTrivial) {
 			trivial.push_back(graph);
 		} else {
@@ -49,11 +50,23 @@ void Optimizer::groupClause() {
 	}
 }
 
+/* Preprocesses select clause for O(1) time for comparison */
+void Optimizer::processSelect() {
+	for (std::vector<std::string>::iterator it = selectClause.begin(); it != selectClause.end(); ++it) {
+		if ((*it).find(".") != std::string::npos) { //is attribute
+			selectSet.insert((*it).substr(0, (*it).find(".")));
+		} else {
+			selectSet.insert(*it);
+		}
+
+	}
+}
+
 /*
 * Creates a hashmap of syn-clause and clause-syn, which will be used for graph traversal
 */
 void Optimizer::groupByClauseType(int i) {
-	std::pair<int,std::vector<std::string>> prioritySyn;
+	std::pair<int, std::vector<std::string>> prioritySyn;
 	//clauses are represented internally by int, in the order pattern, with, st
 	if (i >= (wsize + psize)) {
 		prioritySyn = extractSuchThatSyn(i - wsize - psize);
@@ -74,34 +87,53 @@ void Optimizer::groupByClauseType(int i) {
 }
 
 /*
-* Creates syn-cl and cl-syn maps 
+* Creates syn-cl and cl-syn maps
 */
-void Optimizer::createMaps(std::vector<std::string> synLst, std::pair<int,int> cl) {
+void Optimizer::createMaps(std::vector<std::string> synLst, std::pair<int, int> cl) {
 	clMap[cl.second] = synLst;
 	clSet.insert(cl);
 	for (std::vector<std::string>::iterator it = synLst.begin(); it != synLst.end(); ++it) {
 		if (synMap.find(*it) == synMap.end()) {
-			synMap[*it] = std::priority_queue<std::pair<int,int>>();
+			synMap[*it] = std::priority_queue<std::pair<int, int>>();
 			synSet.insert(*it);
-		} 
+		}
 		synMap[*it].push(cl);
 	}
 }
 
-/* 
+/*
 * Chains synonyms and clauses together
-* Input: clause, isTrivial
+* Input: NIL
 * Output: isTrivial
-* Bookeeping: as this is DFS, a synSet and clSet is used for bookkeeping
+* Bookeeping: as this is Dijkstra, a synSet and clSet is used for bookkeeping
   i.e. once a clause/synonym is accessed, no other synonym/clause can access it
   As the for loop is implemented, the algorithm is guaranteed to access all synonyms of the clause and vice versa
 * Note: The actual clause, rather than the internal reference, is added to the results graph
 */
-bool Optimizer::mapClauses(std::pair<int,int> cl, bool isTrivial) {
+bool Optimizer::mapGraph() {
 	std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>> clause;
-	clause = getClause(cl.second);
-	graph.push_back(clause);
-	clSet.erase(cl); //clause removed from bookkeeping sets
+	bool isTrivial = true;
+	std::pair<int, int> cl;
+	while (!pq.empty()) {
+		cl = pq.top();
+		clause = getClause(cl.second);
+		pq.pop();
+		graph.push_back(clause);
+		isTrivial = mapClauses(cl, isTrivial);
+	}
+	return isTrivial;
+}
+
+/*
+* Chains synonyms and clauses together
+* Input: clause, isTrivial
+* Output: isTrivial
+* Bookeeping: as this is Dijkstra, a synSet and clSet is used for bookkeeping
+  i.e. once a clause/synonym is accessed, no other synonym/clause can access it
+  As the for loop is implemented, the algorithm is guaranteed to access all synonyms of the clause and vice versa
+* Note: function meant to loop through synonyms of clause to find connected clauses
+*/
+bool Optimizer::mapClauses(std::pair<int,int> cl, bool isTrivial) {
 	for (std::vector<std::string>::iterator it = clMap[cl.second].begin(); it != clMap[cl.second].end(); ++it) {
 		if (synSet.find(*it) != synSet.end()) { //check if synonym is already (partially) processed
 			isTrivial = mapSynonym(*it, isTrivial);
@@ -114,22 +146,24 @@ bool Optimizer::mapClauses(std::pair<int,int> cl, bool isTrivial) {
 * Chains synonyms and clauses together
 * Input: synonym, isTrivial
 * Output: isTrivial
-* Bookeeping: as this is DFS, a synSet and clSet is used for bookkeeping
+* Bookeeping: as this is Dijkstra, a synSet and clSet is used for bookkeeping
   i.e. once a clause/synonym is accessed, no other synonym/clause can access it
   As the for loop is implemented, the algorithm is guaranteed to access all synonyms of the clause and vice versa
 * Note: Group is assumed to be trivial until a select synonym matches
+  function meant to loop through clauses of the particular synonym to get connected clauses
 */
 bool Optimizer::mapSynonym(std::string syn, bool isTrivial) {
 	//check if syn is part of select if group is trivial
-	if (isTrivial && (std::find(selectClause.begin(), selectClause.end(), syn) != selectClause.end())) {
-		isTrivial = false;
+	if (isTrivial) {
+		isTrivial = selectSet.find(syn) == selectSet.end();
 	}
 	synSet.erase(syn); //synonym removed from bookkeeping sets
 	while (!synMap[syn].empty()) {
-		std::pair<int,int> cl = synMap[syn].top();
+		std::pair<int, int> cl = synMap[syn].top();
 		synMap[syn].pop();
 		if (clSet.find(cl) != clSet.end()) { //check if clause is already processed
-			isTrivial = mapClauses(cl, isTrivial);
+			pq.push(cl);
+			clSet.erase(cl); //clause removed from bookkeeping sets
 		}
 	}
 	return isTrivial;
@@ -150,31 +184,15 @@ std::pair<int, std::vector<std::string>> Optimizer::extractSuchThatSyn(int index
 	int tmp1 = OptimizerUtility::getSuchThatEntityType(f);
 	int tmp2 = OptimizerUtility::getSuchThatEntityType(s);
 	if (tmp1 != 1 && tmp2 != 1) { //if nonsyn
-		nonSynPQ.push(std::make_pair(OptimizerUtility::getNoSynSuchThatPriority(r, tmp1 + tmp2), index + wsize + psize));
+		pq.push(std::make_pair(OptimizerUtility::getNoSynSuchThatPriority(r, tmp1 + tmp2), 
+			index + wsize + psize));
 		tmp1 = 0;
 	} else {
 		int synNum = 0;
-		if (tmp1 > 0) {
-			synNum++;
-		}
-		if (tmp2 > 0) {
-			synNum++;
-		}
-		if (tmp1 == 1 && tmp2 == 1) {
-			tmp1 = OptimizerUtility::getSynonymPriority(declarations[f]);
-			tmp2 = OptimizerUtility::getSynonymPriority(declarations[s]);
-			if (tmp1 < tmp2) {
-				synLst.push_back(s);
-				synLst.push_back(f);
-			} else {
-				synLst.push_back(f);
-				synLst.push_back(s);
-			}
-		} else if (tmp1 == 1) {
-			synLst.push_back(f);
-		} else if (tmp2 == 1) {
-			synLst.push_back(s);
-		}
+		if (tmp1 > 0) synNum++;
+		if (tmp2 > 0) synNum++;
+		if (tmp1 == 1) synLst.push_back(f);
+		if (tmp2 == 1) synLst.push_back(s);
 		tmp1 = OptimizerUtility::getSuchThatPriority(r, synNum);
 	}
 	return std::make_pair(tmp1, synLst);
@@ -194,18 +212,13 @@ std::pair<int, std::vector<std::string>> Optimizer::extractPatternSyn(int index)
 	int tmp1 = OptimizerUtility::getPatternEntityType1(f);
 	//get from declaration --> syn type of syn
 	std::string type = declarations[syn];
+	synLst.push_back(syn);
 	int tmp2 = 0;
 	if (type.compare("assign") == 0) {
 		tmp2 = OptimizerUtility::getPatternEntityType2(s);
-		if (tmp1 == 1) {
-			synLst.push_back(f);
-		}
-		synLst.push_back(syn);
-	} else {
-		synLst.push_back(syn);
-		if (tmp1 == 1) {	
-			synLst.push_back(f);
-		}
+	} 
+	if (tmp1 == 1) {
+		synLst.push_back(f);	
 	}
 	int p = OptimizerUtility::getPatternPriority(type, tmp1, tmp2);
 	return std::make_pair(p, synLst);
@@ -222,48 +235,37 @@ std::pair<int, std::vector<std::string>> Optimizer::extractWithSyn(int index) {
 	std::vector<std::string> synLst;
 	std::string f = withClauses.at(index).first;
 	std::string s = withClauses.at(index).second;
-	std::string syn;
 	int synNum = 0;
 	int tmp = 0;
-	bool tmp1 = OptimizerUtility::isWithSynonym(f);
-	bool tmp2 = OptimizerUtility::isWithSynonym(s);
-	if (tmp1) {
-		syn = f.substr(0, f.find("."));
-		tmp = OptimizerUtility::getSynonymPriority(declarations[syn]);
-		synLst.push_back(syn);
+	if (OptimizerUtility::isWithSynonym(f)) {
+		synLst.push_back(f.substr(0, f.find(".")));
 		synNum++;
 	} else if (isProg_line(f)) {
-		tmp = 1;
 		synLst.push_back(f);
 		synNum++;
 	}
-	if (tmp2) {
-		syn = s.substr(0, s.find("."));
-		if (OptimizerUtility::getSynonymPriority(declarations[syn]) > tmp) {
-			synLst.insert(synLst.begin(), syn);
-		} else {
-			synLst.push_back(syn);
-		}
+	if (OptimizerUtility::isWithSynonym(s)) {
+		synLst.push_back(s.substr(0, s.find(".")));
 		synNum++;
 	} else if (isProg_line(s)) {
 		synLst.push_back(s);
 		synNum++;
 	}
 	if (synNum == 0) {
-		nonSynPQ.push(std::make_pair(9, index + psize));
+		pq.push(std::make_pair(19, index + psize));
 	} else {
 		tmp = OptimizerUtility::getWithPriority(synNum);
 	}
 	return std::make_pair(tmp, synLst);
 }
 
-/* 
+/*
 * Checks whether synonym is prog_line for processing of with clause
 */
 bool Optimizer::isProg_line(std::string str) {
 	bool res = false;
 	if (declarations.find(str) != declarations.end()) {
-		res = declarations[str] == "prog_line";
+		res = declarations[str].compare("prog_line") == 0;
 	}
 	return res;
 }
@@ -281,9 +283,8 @@ std::vector<std::pair<std::pair<std::string, std::string>, std::pair<std::string
 
 std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>> Optimizer::getClause(int cl) {
 	std::pair<std::pair<std::string, std::string>, std::pair<std::string, std::string>> clause;
-	int index;
 	if (cl >= psize + wsize) {
-		index = cl - psize - wsize;
+		int index = cl - psize - wsize;
 		clause = std::make_pair(std::make_pair("st", suchThatClauses.at(index).first), suchThatClauses.at(index).second);
 	} else if (cl >= psize) {
 		clause = std::make_pair(std::make_pair("with", "with"), withClauses.at(cl - psize));

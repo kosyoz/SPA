@@ -1,0 +1,155 @@
+1 - get variable modified from procedure
+variable v;
+Select v such that Modifies("a", v)
+a, b, c, d
+5000
+2 - get variable modified from procedure
+variable v;
+Select v such that Modifies("b", v)
+b, c, d
+5000
+3 - get variable modified from procedure
+variable v;
+Select v such that Modifies("c", v)
+a, b, c, d
+5000
+4 - get variable modified from procedure
+variable v;
+Select v such that Modifies("d", v)
+b, c, d
+5000
+5 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(1, v)
+a, b, c, d
+5000
+6 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(2, v)
+b
+5000
+7 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(3, v)
+a
+5000
+8 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(4, v)
+a, b, c, d
+5000
+9 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(6, v)
+b, c, d
+5000
+10 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(13, v)
+b
+5000
+11 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(14, v)
+b, c, d
+5000
+12 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(15, v)
+none
+5000
+13 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(19, v)
+c
+5000
+14 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(21, v)
+b, c, d
+5000
+15 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(24, v)
+d
+5000
+16 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(25, v)
+b, c, d
+5000
+17 - get variable modified from stmtNumber
+variable v;
+Select v such that Modifies(28, v)
+none
+5000
+18 - select all variable, get procedure modifying wildcard
+variable v; procedure p;
+Select v such that Modifies(p, _)
+a, b, c, d
+5000
+19 - get procedure modifying wildcard
+variable v; procedure p;
+Select p such that Modifies(p, _)
+a, b, c, d
+5000
+20 - get procedure modifying varName
+variable v; procedure p;
+Select p such that Modifies(p, "a")
+a, c
+5000
+21 - get procedure modifying varName
+variable v; procedure p;
+Select p such that Modifies(p, "b")
+a, b, c, d
+5000
+22 - get procedure modifying varName
+variable v; procedure p;
+Select p such that Modifies(p, "c")
+a, b, c, d
+5000
+23 - get procedure modifying varName
+variable v; procedure p;
+Select p such that Modifies(p, "d")
+a, b, c, d
+5000
+24 - invalid query
+variable v; procedure p;
+Select v such that Modifies(_, "a")
+none
+5000
+25 - select all variable
+variable v; procedure p;
+Select v such that Modifies(p, v)
+a, b, c, d
+5000
+26 - select all procedure
+variable v; procedure p;
+Select p such that Modifies(p, v)
+a, b, c, d
+5000
+27 - select all variable, get procedure modifying varName
+variable v; procedure p;
+Select v such that Modifies(p, "a")
+a, b, c, d
+5000
+28 - invalid query
+variable v; procedure p;
+Select v such that Modifies(_, _)
+none
+5000
+29 - invalid query
+variable v; procedure p;
+Select p such that Modifies(_, _)
+none
+5000
+30 - invalid query
+variable v; procedure p;
+Select v such that Modifies(_, v)
+none
+5000
+31 - invalid query
+variable v; procedure p;
+Select p such that Modifies(_, v)
+none
+5000

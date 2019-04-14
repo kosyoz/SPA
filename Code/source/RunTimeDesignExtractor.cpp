@@ -121,7 +121,7 @@ bool RunTimeDesignExtractor::DFSRecursiveCheckAffectsPair(int start, int target,
 			return true;
 		}
 		//We have encountered something in this path that breaks Affects. Therefore we return false.
-		else if (isLastModifiedBroken(current, start)) {
+		if (isLastModifiedBroken(current, start)) {
 			return false;
 		}
 	}
@@ -169,7 +169,7 @@ bool RunTimeDesignExtractor::DFSRecursiveCheckAffecting(int start, int current, 
 			return true;
 		}
 		//We have encountered something in this path that breaks Affects. Therefore we return false.
-		else if (isLastModifiedBroken(current, start)) {
+		if (isLastModifiedBroken(current, start)) {
 			return false;
 		}
 	}
@@ -402,7 +402,7 @@ void RunTimeDesignExtractor::DFSRecursiveGetAffectedByList(int start, int curren
 			affectedList.push_back(current);
 		}
 		//We have encountered something in this path that breaks Affects. Therefore we return false.
-		else if (isLastModifiedBroken(current, start)) {
+		if (isLastModifiedBroken(current, start)) {
 			return;
 		}
 	}

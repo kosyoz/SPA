@@ -9,7 +9,7 @@
 
 class QueryParser {
 public:
-	static std::list<std::string> parse(std::string query);
+	static std::unordered_set<std::string> parse(std::string query);
 
 	static std::vector<std::string> splitClauses(std::string query);
 
@@ -27,7 +27,7 @@ public:
 	static std::vector<std::pair<std::string, std::string>>
 		splitWithCondition(std::vector<std::string> withClause);
 
-	static std::list<std::string> evaluateSelectConditions(
+	static std::unordered_set<std::string> evaluateSelectConditions(
 		std::unordered_map<std::string, std::string> declarations,
 		std::vector<std::string> selectedVar,
 		std::vector<std::pair<std::string, std::pair<std::string, std::string>>> suchThatCondition,

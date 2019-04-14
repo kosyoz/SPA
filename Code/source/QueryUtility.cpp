@@ -64,7 +64,7 @@ bool QueryUtility::isOutOfRange(std::string s) {
 	return result;
 }
 
-/*
+/*	
 Get attribute of an
 attribute reference.
 */
@@ -431,15 +431,12 @@ std::unordered_map<std::string, std::vector<std::string>> QueryUtility::oneCommo
 	std::unordered_map<std::string, std::vector<std::string>> newTable;
 	std::string commonKey = toAddTable.begin()->first;
 	int oldSize = oldTable[commonKey].size();
-	int toAddSize = toAddTable[commonKey].size();
+	std::unordered_set<std::string> toAddSet (toAddTable[commonKey].begin(), toAddTable[commonKey].end());
 	for (auto columnIt = oldTable.begin(); columnIt != oldTable.end(); ++columnIt) {
 		std::vector<std::string> newColumn;
 		for (std::vector<std::string>::size_type i = 0; i != oldSize; i++) {
-			for (std::vector<std::string>::size_type j = 0; j != toAddSize; j++) {
-				if (toAddTable[commonKey][j] == oldTable[commonKey][i]) {
-					newColumn.push_back(columnIt->second[i]);
-					break;
-				}
+			if (toAddSet.count(oldTable[commonKey][i]) == 1) {
+				newColumn.push_back(columnIt->second[i]);
 			}
 		}
 		newTable.insert({ columnIt->first, newColumn });
@@ -464,15 +461,16 @@ std::unordered_map<std::string, std::vector<std::string>> QueryUtility::twoCommo
 	}
 	int oldSize = oldTable[commonKeys[0]].size();
 	int toAddSize = toAddTable[commonKeys[0]].size();
+	std::unordered_set<std::pair<std::string, std::string>, strPairhash> toAddSet;
+	for (std::vector<std::string>::size_type i = 0; i != toAddSize; i++) {
+		toAddSet.insert({ toAddTable[commonKeys[0]][i], toAddTable[commonKeys[1]][i] });
+	}
 	for (auto columnIt = oldTable.begin(); columnIt != oldTable.end(); ++columnIt) {
 		std::vector<std::string> newColumn;
 		for (std::vector<std::string>::size_type i = 0; i != oldSize; i++) {
-			for (std::vector<std::string>::size_type j = 0; j != toAddSize; j++) {
-				if (toAddTable[commonKeys[0]][j] == oldTable[commonKeys[0]][i]
-					&& toAddTable[commonKeys[1]][j] == oldTable[commonKeys[1]][i]) {
-					newColumn.push_back(columnIt->second[i]);
-					break;
-				}
+			std::pair<std::string, std::string> currentPair ({ oldTable[commonKeys[0]][i], oldTable[commonKeys[1]][i] });
+			if (toAddSet.count(currentPair) == 1) {
+				newColumn.push_back(columnIt->second[i]);
 			}
 		}
 		newTable.insert({ columnIt->first, newColumn });

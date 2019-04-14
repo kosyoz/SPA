@@ -858,29 +858,30 @@ std::unordered_set<std::pair<int, std::string>, intStringhash> PKB::getWhileStmC
 	return cvStore.getWhileStmControlVariablePair();
 }
 
-void PKB::erase()
+void PKB::clear()
 {
-	procList.erase(procList.begin(), procList.end());
-	procStmMap.erase(procStmMap.begin(), procStmMap.end());
-	stmTypeList.erase(stmTypeList.begin(), stmTypeList.end());
-	varList.erase(varList.begin(), varList.end());
-	constList.erase(constList.begin(), constList.end());
-	readStmList.erase(readStmList.begin(), readStmList.end());
-	printStmList.erase(printStmList.begin(), printStmList.end());
-	assignStmList.erase(assignStmList.begin(), assignStmList.end());
-	ifStmList.erase(ifStmList.begin(), ifStmList.end());
-	whileStmList.erase(whileStmList.begin(), whileStmList.end());
-	callStmList.erase(callStmList.begin(), callStmList.end());
-	patternList.erase(patternList.begin(), patternList.end());
-	readPairList.erase(readPairList.begin(), readPairList.end());
-	printPairList.erase(printPairList.begin(), printPairList.end());
-	whileBlockStmLists.erase(whileBlockStmLists.begin(), whileBlockStmLists.end());
-	ifBlockStmLists.erase(ifBlockStmLists.begin(), ifBlockStmLists.end());
-	elseBlockStmLists.erase(elseBlockStmLists.begin(), elseBlockStmLists.end());
-	fStore.erase();
-	pStore.erase();
-	uStore.erase();
-	mStore.erase();
-	cStore.erase();
-	nStore.erase();
+	procList.clear();
+	procStmMap.clear();
+	stmProcList.clear();
+	stmTypeList.clear();
+	varList.clear();
+	constList.clear();
+	readStmList.clear();
+	printStmList.clear();
+	assignStmList.clear();
+	ifStmList.clear();
+	whileStmList.clear();
+	callStmList.clear();
+	patternList.clear();
+	readPairList.clear();
+	printPairList.clear();
+	whileBlockStmLists.clear();
+	ifBlockStmLists.clear();
+	elseBlockStmLists.clear();
+	fStore.clear();
+	pStore.clear();
+	uStore.clear();
+	mStore.clear();
+	cStore.clear();
+	nStore.clear();
 }

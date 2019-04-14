@@ -50,13 +50,12 @@ store.setCallDesc("fruit", std::unordered_set<std::string>{"fruit2", "fruit3", "
 store.setCallDesc("fruit2", std::unordered_set<std::string>{"fruit3", "fruit4"});
 store.setCallDesc("fruit3", std::unordered_set<std::string>{"fruit4"});
 */
-std::unordered_set<std::string> caller[4] = { {}, {"fruit"}, {"fruit", "fruit2"}, {"fruit3"} };
-std::unordered_set<std::string> callees[4] = { {"fruit2", "fruit3"}, {"fruit3"}, {"fruit4"}, {} };
-std::unordered_set<std::string> callAnc[4] = { {}, {"fruit"}, {"fruit", "fruit2"},
-	{"fruit", "fruit2", "fruit3"} };
-std::unordered_set<std::string> callDesc[4] = { {"fruit2", "fruit3", "fruit4"}, {"fruit3", "fruit4"},
-	{"fruit4"}, {} };
 
+std::unordered_map<std::string, cRelationships> callTable =
+{ {"fruit", { {}, {"fruit2", "fruit3"}, {}, {"fruit2", "fruit3", "fruit4"} }},
+{"fruit2", { {"fruit"}, {"fruit3"}, {"fruit"}, {"fruit3", "fruit4"} }},
+{"fruit3", { {"fruit", "fruit2"}, {"fruit4"}, {"fruit", "fruit2"}, {"fruit", "fruit2", "fruit3"} }},
+{"fruit4", { {"fruit3"}, {}, {"fruit", "fruit2", "fruit3"}, {} }} };
 
 std::unordered_set< std::pair<std::string, std::string>, strPairhash> callPairList = 
 	{ std::pair<std::string, std::string>("fruit", "fruit2"),

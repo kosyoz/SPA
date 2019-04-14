@@ -383,6 +383,9 @@ std::string QueryValidator::validatePatternParam(std::vector<std::pair<std::stri
 				(secondArgs[0] == '"' && ExpressionUtil::verifyInfixExpression(secondArgs.substr(1, secondArgs.length() - 2)))) {
 				// valid second args
 			}
+			else if (secondArgs.find(",") != -1) {
+				return "invalid secondArgs";
+			}
 			else {
 				return "semantic error";
 			}
@@ -392,14 +395,20 @@ std::string QueryValidator::validatePatternParam(std::vector<std::pair<std::stri
 			if (secondArgs == "_,_") {
 				// valid second args
 			}
-			else {
+			else if (secondArgs.find(",") != -1){
 				return "semantic error";
+			}
+			else {
+				return "invalid secondArgs";
 			}
 
 		}
 		else if (stmtType == "while") {
 			if (secondArgs == "_") {
 				// valid second args
+			}
+			else if (secondArgs.find(",") != -1){
+				return "invalid secondArgs";
 			}
 			else {
 				return "semantic error";

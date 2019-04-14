@@ -1,0 +1,195 @@
+1 - select synonym, uses wildcard wildcard
+stmt s;
+Select s such that Uses(_, _)
+none
+5000
+2 - select synonym, uses wildcard synonym
+stmt s; variable v;
+Select s such that Uses(_, v)
+none
+5000
+3 - select synonym, uses wildcard and undeclared synonym
+stmt s;
+Select s such that Uses(_, v)
+none
+5000
+4 - select synonym, uses synonym wildcard
+stmt s;
+Select s such that Uses(s, _)
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28, 30, 31
+5000
+5 - select synonym, uses synonym wildcard
+variable v; procedure p;
+Select v such that Uses(p, _)
+a, b, c, d
+5000
+6 - select synonym, uses undeclared synonym and wildcard
+stmt s; procedure p;
+Select s such that Uses(s3, _)
+none
+5000
+7 - select synonym, uses synonym wildcard
+stmt s; procedure p; variable v;
+Select v such that Uses(s, _)
+a, b, c, d
+5000
+8 - select synonym, uses synonym wildcard
+if ifs;
+Select ifs such that Uses(ifs, _)
+6, 25
+5000
+9 - select synonym, uses synonym wildcard
+while w; 
+Select w such that Uses(w, _)
+1, 14
+5000
+10 - select synonym, uses procedure varName
+procedure p;
+Select p such that Uses(p, "a")
+a, b, c, d
+5000
+11 - select synonym, uses procedure varName
+procedure p;
+Select p such that Uses(p, "c")
+a, b, c, d
+5000
+12 - select synonym, uses if varName
+if ifs;
+Select ifs such that Uses(ifs, "b")
+6, 25
+5000
+13 - select synonym, uses synonym varName
+if ifs; 
+Select ifs such that Uses(ifs, "d")
+6, 25
+5000
+14 - select synonym, uses synonym varName
+while w; 
+Select w such that Uses(w, "a")
+1, 14
+5000
+15 - select synonym, uses synonym varName
+assign a;
+Select a such that Uses(a, "c")
+10, 16, 18, 19, 20, 23
+5000
+16 - select synonym, uses synonym varName
+assign a;
+Select a such that Uses(a, "d")
+27, 20
+5000
+17 - select synonym, uses synonym varName
+call c;
+Select c such that Uses(c, "a")
+21, 17, 4, 8
+5000
+19 - select synonym, uses undeclared synonym and varName
+stmt s; 
+Select s such that Uses(s3, "c")
+none
+5000
+20 - select synonym, uses undeclared synonym and nonexistent varName
+stmt s; 
+Select s such that Uses(s3, "something")
+none
+5000
+21 - select synonym, uses procedure and nonexistent varName
+procedure p;
+Select p such that Uses(p, "some")
+none
+5000
+22 - select synonym, uses stmtNum synonym
+variable v;
+Select v such that Uses(4, v)
+a, b, c, d
+5000
+23 - select synonym, uses stmtNum synonym
+variable v;
+Select v such that Uses(22, v)
+b
+5000
+24 - select synonym, uses stmtNum synonym
+variable v;
+Select v such that Uses(14, v)
+a, b, c, d
+5000
+25 - select synonym, uses procName synonym
+variable v;
+Select v such that Uses("a", v)
+a, b, c, d
+5000
+26 - select synonym, uses procName synonym
+variable v;
+Select v such that Uses("b", v)
+a, b, c, d
+5000
+27 - select synonym, uses nonexistent stmtNum and synonym
+variable v;
+Select v such that Uses(18, v)
+a, c
+5000
+28 - select synonym, uses stmtNum and undeclared synonym
+variable v;
+Select v such that Uses(27, v)
+d, b
+5000
+29 - select synonym, uses nonexistent stmtNum and undeclared synonym
+stmt s; 
+Select s such that Uses(99, s3)
+none
+5000
+30 - select synonym, uses stmtNum varName
+constant cons;
+Select cons such that Uses(19, "a")
+none
+5000
+31 - select synonym, uses stmtNum varName
+constant cons;
+Select BOOLEAN such that Uses(20, "a")
+FALSE
+5000
+32 - select synonym, uses stmtNum varName
+if ifs;
+Select ifs such that Uses(ifs, "b")
+6, 25
+5000
+33 - select synonym, uses stmtNum and nonexistent varName
+stmt s;
+Select s such that Uses(33, "some")
+none
+5000
+34 - select synonym, uses nonexistent stmtNum and varName
+stmt s;
+Select s such that Uses(101, "red")
+none
+5000
+35 - select synonym, uses nonexistent stmtNum and nonexistent varName
+stmt s;
+Select s such that Uses(1011, "variablex")
+none
+5000
+36 - select synonym, uses synonym synonym
+if ifs; variable v;
+Select ifs such that Uses(ifs, v)
+6, 25
+5000
+37 - select synonym, uses synonym synonym
+while w; variable v;
+Select w such that Uses(w, v)
+1, 14
+5000
+38 - select synonym, uses synonym synonym
+print pr; variable v;
+Select pr such that Uses(pr, v)
+12, 15, 28, 31
+5000
+39 - select synonym, uses synonym and synonym
+print pr; variable v;
+Select v such that Uses(pr, v)
+b, c
+5000
+40 - select synonym, uses synonym and undeclared synonym
+stmt s;
+Select s such that Uses(s, v)
+none
+5000

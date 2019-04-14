@@ -13,25 +13,25 @@ FALSE
 Select BOOLEAN such that Affects*(2, 7)
 FALSE
 5000
-4 - select boolean, affectsStar stmtNumber stmtNumber, b not modified in d
+4 - select boolean, affectsStar stmtNumber stmtNumber, b modified in proc d
 
 Select BOOLEAN such that Affects*(7, 9)
-TRUE
+FALSE
 5000
 5 - select boolean, affectsStar stmtNumber stmtNumber, b modified in proc c
 
 Select BOOLEAN such that Affects*(2, 10)
 FALSE
 5000
-6 - select boolean, affectsStar stmtNumber stmtNumber, exist a path not modifying var c
+6 - select boolean, affectsStar stmtNumber stmtNumber, proc d modifies c
 
 Select BOOLEAN such that Affects*(16, 16)
-TRUE
+FALSE
 5000
-7 - select boolean, affectsStar stmtNumber stmtNumber
+7 - select boolean, affectsStar stmtNumber stmtNumber, proc d modifies c
 
 Select BOOLEAN such that Affects*(16, 18)
-TRUE
+FALSE
 5000
 8 - select boolean, affectsStar stmtNumber stmtNumber, 15 is not assign
 
@@ -43,20 +43,20 @@ FALSE
 Select BOOLEAN such that Affects*(19, 20)
 TRUE
 5000
-10 - select boolean, affectsStar stmtNumber stmtNumber
+10 - select boolean, affectsStar stmtNumber stmtNumber, proc d modifies b
 
 Select BOOLEAN such that Affects*(20, 22)
-TRUE
+FALSE
 5000
-11 - select boolean, affectsStar stmtNumber stmtNumber
+11 - select boolean, affectsStar stmtNumber stmtNumber, proc d modifies b
 
 Select BOOLEAN such that Affects*(19, 22)
-TRUE
+FALSE
 5000
-12 - select boolean, affectsStar stmtNumber stmtNumber
+12 - select boolean, affectsStar stmtNumber stmtNumber, proc d modifies c
 
 Select BOOLEAN such that Affects*(19, 23)
-TRUE
+FALSE
 5000
 13 - select boolean, affectsStar stmtNumber stmtNumber
 

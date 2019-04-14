@@ -11,7 +11,7 @@ namespace UnitTesting
 		TEST_METHOD_INITIALIZE(CallStorage_Initialize)
 		{
 			CtrlVarStorage store;
-			store.erase();
+			store.clear();
 			store.addIfControlVariable(5, "apple");
 			store.addWhileControlVariable(6, "durian");
 			store.addWhileControlVariable(6, "cherry");
@@ -34,7 +34,7 @@ namespace UnitTesting
 						   std::unordered_set<int>{5});
 		}
 
-		TEST_METHOD(getIfStmWithControlVariable_NonExistingVariable_Fail)
+		TEST_METHOD(getIfStmWithControlVariable_NonExistingVariable_EmptyResult)
 		{
 			Assert::IsTrue(CtrlVarStorage().getIfStmWithControlVariable("nonExistant") ==
 						   std::unordered_set<int>{});
@@ -46,7 +46,7 @@ namespace UnitTesting
 						   std::unordered_set<int>{6});
 		}
 
-		TEST_METHOD(getWhileStmWithControlVariable_NonExistingVariable_Fail)
+		TEST_METHOD(getWhileStmWithControlVariable_NonExistingVariable_EmptyResult)
 		{
 			Assert::IsTrue(CtrlVarStorage().getWhileStmWithControlVariable("nonExistant") ==
 						   std::unordered_set<int>{});
@@ -54,18 +54,12 @@ namespace UnitTesting
 
 		TEST_METHOD(getIfStmControlVariablePair_Correct)
 		{
-			Assert::IsTrue(CtrlVarStorage().getIfStmControlVariablePair() ==
-						   std::unordered_set<std::pair<int, std::string>, intStringhash>
-								{std::pair<int, std::string>(5, "apple")});
+			Assert::IsTrue(CtrlVarStorage().getIfStmControlVariablePair() == ifPatternPair);
 		}
 
 		TEST_METHOD(getWhileStmControlVariablePair_Correct)
 		{
-			Assert::IsTrue(CtrlVarStorage().getWhileStmControlVariablePair() ==
-						   std::unordered_set<std::pair<int, std::string>, intStringhash>
-							{ std::pair<int, std::string>(6, "durian"),
-								std::pair<int, std::string>(6, "cherry"),
-								std::pair<int, std::string>(11, "banana") });
+			Assert::IsTrue(CtrlVarStorage().getWhileStmControlVariablePair() == whilePatternPair);
 		}
 
 	};

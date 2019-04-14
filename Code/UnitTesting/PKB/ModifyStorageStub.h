@@ -37,31 +37,31 @@
 
 /*
 Modify
-store.addModifiesStm(1, "apple");
+store.addModifiesStm(1, "apple"); *
 store.addModifiesStm(2, "pineapple");
 store.addModifiesStm(2, "pear");
-store.addModifiesStm(4, "apple");
+store.addModifiesStm(4, "apple"); *
 store.addModifiesStm(5, "durian");
 store.addModifiesStm(5, "figs");
 store.addModifiesStm(5, "pear");
 store.addModifiesStm(6, "durian");
-store.addModifiesStm(7, "durian");
-store.addModifiesStm(8, "figs");
+store.addModifiesStm(7, "durian"); *
+store.addModifiesStm(8, "figs"); *
 store.addModifiesStm(9, "pear");
-store.addModifiesStm(10, "pineapple");
+store.addModifiesStm(10, "pineapple"); *
 store.addModifiesStm(11, "pear");
 store.addModifiesStm(12, "pear");
 store.addModifiesStm(14, "pear");
-store.addModifiesStm(15, "pear");
-store.addModifiesProc("fruit", "apple");
+store.addModifiesStm(15, "pear"); *
+store.addModifiesProc("fruit", "apple"); *
 store.addModifiesProc("fruit", "pineapple");
-store.addModifiesProc("fruit", "durian");
-store.addModifiesProc("fruit", "figs");
+store.addModifiesProc("fruit", "durian"); *
+store.addModifiesProc("fruit", "figs"); *
 store.addModifiesProc("fruit", "pear");
-store.addModifiesProc("fruit2", "pineapple");
+store.addModifiesProc("fruit2", "pineapple"); *
 store.addModifiesProc("fruit2", "pear");
 store.addModifiesProc("fruit3", "pear");
-store.addModifiesProc("fruit4", "pear");
+store.addModifiesProc("fruit4", "pear"); *
 */
 std::unordered_map<int, std::unordered_set<std::string>> stmToVarMapModifies = 
 { {1, {"apple"}}, {2, {"pineapple", "pear"}}, {4, {"apple"}}, {5, {"durian", "figs", "pear"}},

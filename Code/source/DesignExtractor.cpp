@@ -389,27 +389,52 @@ void DesignExtractor::extractNextEntity() {
 		int parent = pkb.getParent(stmt);
 		//if if statment have follower, next(last stmt of then block and else block, follower)
 		if (pkb.getFollower(stmt) != 0) {
-			pkb.addNext(ifLastStmt.first, pkb.getFollower(stmt));
-			pkb.addNext(ifLastStmt.second, pkb.getFollower(stmt));
+			if (pkb.getStmType(ifLastStmt.first) != ifStm) {
+				pkb.addNext(ifLastStmt.first, pkb.getFollower(stmt));
+			}
+			if (pkb.getStmType(ifLastStmt.second) != ifStm) {
+				pkb.addNext(ifLastStmt.second, pkb.getFollower(stmt));
+			}
 		}
 		else {
 			while (parent != 0) {
 				//if if statment have a while statment as parent, 
 				//next(last stmt of then block and else block, while statment)
 				if (pkb.getStmType(parent) == whileStm) {
-					pkb.addNext(ifLastStmt.first, parent);
-					pkb.addNext(ifLastStmt.second, parent);
-					break;
+
+					if (pkb.getFollower(stmt) != 0) {
+						if (pkb.getStmType(ifLastStmt.first) != ifStm) {
+							pkb.addNext(ifLastStmt.first, pkb.getFollower(stmt));
+						}
+						if (pkb.getStmType(ifLastStmt.second) != ifStm) {
+							pkb.addNext(ifLastStmt.second, pkb.getFollower(stmt));
+						}
+						break;
+					}
+					else {
+						if (pkb.getStmType(ifLastStmt.first) != ifStm) {
+							pkb.addNext(ifLastStmt.first, parent);
+						}
+						if (pkb.getStmType(ifLastStmt.second) != ifStm) {
+							pkb.addNext(ifLastStmt.second, parent);
+						}
+						break;
+					}
 				}
 				//if if statment have a if statment as parent, 
 				if (pkb.getStmType(parent) == ifStm) {
 					//next(last stmt of then block and else block, follower of parent)
 					if (pkb.getFollower(parent) != 0) {
-						pkb.addNext(ifLastStmt.first, pkb.getFollower(parent));
-						pkb.addNext(ifLastStmt.second, pkb.getFollower(parent));
+						if (pkb.getStmType(ifLastStmt.first) != ifStm) {
+							pkb.addNext(ifLastStmt.first, pkb.getFollower(parent));
+						}
+						if (pkb.getStmType(ifLastStmt.second) != ifStm) {
+							pkb.addNext(ifLastStmt.second, pkb.getFollower(parent));
+						}
 						break;
 					}
 				}
+				stmt = parent;
 				parent = pkb.getParent(parent);
 			}
 		}
